@@ -207,8 +207,9 @@ data "aws_region" "default" {
 }
 
 module "codebuild" {
-  source                                = "cloudposse/codebuild/aws"
-  version                               = "0.35.0"
+  # source                                = "cloudposse/codebuild/aws"
+  # version                               = "0.35.0"
+  source                                = "git::https://github.com/joe-niland/terraform-aws-codebuild.git?ref=support-env-var-types"
   build_image                           = var.build_image
   build_compute_type                    = var.build_compute_type
   build_timeout                         = var.build_timeout
