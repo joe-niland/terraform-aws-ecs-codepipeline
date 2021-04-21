@@ -156,20 +156,20 @@ data "aws_iam_policy_document" "codebuild" {
 }
 
 # https://docs.aws.amazon.com/codepipeline/latest/userguide/connections-permissions.html
-resource "aws_iam_role_policy_attachment" "codestar" {
-  count      = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
-  role       = join("", aws_iam_role.default.*.id)
-  policy_arn = join("", aws_iam_policy.codestar.*.arn)
-}
+# resource "aws_iam_role_policy_attachment" "codestar" {
+#   count      = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
+#   role       = join("", aws_iam_role.default.*.id)
+#   policy_arn = join("", aws_iam_policy.codestar.*.arn)
+# }
 
-module "codestar_label" {
-  source     = "cloudposse/label/null"
-  version    = "0.24.1"
-  enabled    = module.this.enabled && var.codestar_connection_arn != ""
-  attributes = ["codestar"]
+# module "codestar_label" {
+#   source     = "cloudposse/label/null"
+#   version    = "0.24.1"
+#   enabled    = module.this.enabled && var.codestar_connection_arn != ""
+#   attributes = ["codestar"]
 
-  context = module.this.context
-}
+#   context = module.this.context
+# }
 
 # resource "aws_iam_policy" "codestar" {
 #   count  = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
@@ -338,7 +338,7 @@ resource "aws_codepipeline" "bitbucket" {
     aws_iam_role_policy_attachment.s3,
     aws_iam_role_policy_attachment.codebuild,
     aws_iam_role_policy_attachment.codebuild_s3,
-    aws_iam_role_policy_attachment.codestar
+    # aws_iam_role_policy_attachment.codestar
   ]
 
   stage {
