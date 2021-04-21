@@ -171,35 +171,35 @@ module "codestar_label" {
   context = module.this.context
 }
 
-resource "aws_iam_policy" "codestar" {
-  count  = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
-  name   = module.codestar_label.id
-  policy = join("", data.aws_iam_policy_document.codestar.*.json)
-}
+# resource "aws_iam_policy" "codestar" {
+#   count  = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
+#   name   = module.codestar_label.id
+#   policy = join("", data.aws_iam_policy_document.codestar.*.json)
+# }
 
-data "aws_iam_policy_document" "codestar" {
-  count = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
-  statement {
-    sid = ""
+# data "aws_iam_policy_document" "codestar" {
+#   count = module.this.enabled && var.codestar_connection_arn != "" ? 1 : 0
+#   statement {
+#     sid = ""
 
-    actions = [
-      "codestar-connections:UseConnection"
-    ]
+#     actions = [
+#       "codestar-connections:UseConnection"
+#     ]
 
-    condition {
-      test     = "StringLike"
-      variable = "codestar-connections:RepositoryName"
-      values = [
-        var.repo_name
-        # format("%s/%s", var.repo_owner, var.repo_name)
-      ]
-    }
+#     condition {
+#       test     = "StringLike"
+#       variable = "codestar-connections:RepositoryName"
+#       values = [
+#         var.repo_name
+#         # format("%s/%s", var.repo_owner, var.repo_name)
+#       ]
+#     }
 
-    resources = [var.codestar_connection_arn]
-    effect    = "Allow"
+#     resources = [var.codestar_connection_arn]
+#     effect    = "Allow"
 
-  }
-}
+#   }
+# }
 
 data "aws_caller_identity" "default" {
 }
