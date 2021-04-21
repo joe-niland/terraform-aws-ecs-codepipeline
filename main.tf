@@ -188,9 +188,10 @@ data "aws_iam_policy_document" "codestar" {
 
     condition {
       test     = "StringLike"
-      variable = "codestar-connections:FullRepositoryId"
+      variable = "codestar-connections:RepositoryName"
       values = [
-        format("%s/%s", var.repo_owner, var.repo_name)
+        var.repo_name
+        # format("%s/%s", var.repo_owner, var.repo_name)
       ]
     }
 
